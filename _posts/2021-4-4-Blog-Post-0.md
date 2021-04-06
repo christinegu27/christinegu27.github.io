@@ -245,7 +245,7 @@ ax.set(xlabel= "Penguin Body Mass (g)", title = "Penguin Body Mass by Species")
 
 Before any data can be plotted on the graph, a plotting function needs to be defined. This function will be applied to each group, or penguin species, to allow the histogram to color code by species.  This will allow the histogram  to color code by  species. The plotting function will be defined to also give labels for each group it is plotting and provide a legend.
 
-```python
+```python 
 def plot_hist(df, colname, alpha):
     """
     Plots a histogram of the given data
