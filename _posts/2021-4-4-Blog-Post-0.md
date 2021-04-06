@@ -270,3 +270,15 @@ fig
 ![]({{christinegu27.github.io}}/images/blog post 0 penguin.png)
 
 Our final visualization shows the histogram of penguin body mass by species. The legend shows the color corresponding with each penguin species, where green represents Gentoo penguins, blue (Adelie) and orange (Chinstrap) penguins. On average, Adelie and Chinstrap penguins are about the same size, but Gentoo penguins are generally larger.
+
+{::options parse_block_html="true" /}
+<div class="got-help">
+What I learned from peer feedback: 
+</div>
+{::options parse_block_html="false" /}
+
+{::options parse_block_html="true" /}
+<div class="gave-help">
+Suggestions given: 
+</div>
+{::options parse_block_html="false" /}
