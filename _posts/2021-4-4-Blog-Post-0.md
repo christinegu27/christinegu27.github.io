@@ -276,12 +276,12 @@ Our final visualization shows the histogram of penguin body mass by species. The
 
 {::options parse_block_html="true" /}
 <div class="got-help">
-What I learned from peer feedback: 
+Suggestions from peer feedback: 
 </div>
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
 <div class="gave-help">
-Suggestions given: 
+Suggestions given to classmates: 
 </div>
 {::options parse_block_html="false" /}
