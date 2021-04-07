@@ -5,9 +5,11 @@ title: Blog Post 0
 
 ## The Palmer Penguins Dataset (again)
 
+The goal of this blog post will be to create a color-coded histogram showing the body mass of the penguins from the Palmer Penguins dataset. Each penguin species will get its own color, so penguin size can be compared between species.   
+
 ### Getting the Data
 
-The imported packages used to create a visualization of the Palmer Penguins dataset will be `matplotlib` and `pandas`. `pandas` is needed to read in the data and will be used to manipulate the dataset and prepare it for graphing. The tools from `matplotlib` will be used to actually create the graph. First, let's read in the data from the internet and take a look at a couple rows.
+The imported packages used to create a visualization of the Palmer Penguins dataset will be `matplotlib` and `pandas`. `pandas` is needed to read in the data and will be used to manipulate the dataset to prepare it for graphing. The tools from `matplotlib` will be used to actually create the graph. First, let's read in the data from the internet and take a look at a couple rows.
 
 ```python
 import pandas as pd
@@ -160,7 +162,7 @@ penguins.head()
 </table>
 </div>
 
-The groupby function from `pandas` will automatically split up the dataset by the chosen parameter, which is penguin species in this case. The goal of this blog post will be to create a color-coded histogram showing the body mass of the penguins. Each penguin species will get its own color, so penguin size can be compared between species. 
+The groupby function from `pandas` will automatically split up the dataset by the chosen parameter, which is penguin species in this case. Once the data is grouped, an aggregate function (sum, count, median, etc.) can be applied to each group. A demonstration is shown below, where the mean is calculated by species for each of the measurements taken. 
 
 ```python
 penguins.groupby('Species').mean().drop(['Sample Number'],axis=1)
@@ -176,12 +178,12 @@ penguins.groupby('Species').mean().drop(['Sample Number'],axis=1)
     }
 
     .dataframe thead th {
-        text-align: right;
+        text-align: center;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
-    <tr style="text-align: right;">
+    <tr style="text-align: center;">
       <th></th>
       <th>Culmen Length (mm)</th>
       <th>Culmen Depth (mm)</th>
@@ -234,16 +236,17 @@ penguins.groupby('Species').mean().drop(['Sample Number'],axis=1)
 
 ### Making the Visualization
 
-To start, create the figure and axes objects that will be used to graph the data. This figure will also need a title and an x-axis label (since this is a histogram, the y-axis label isn't necessary). In order to add these labels, the set function will be used with the `ax` object.
+To start, create a figure and axes objects that the data will be graphed on. This figure will also need a title and an x-axis label (since this is a histogram, the y-axis label isn't necessary). In order to add these labels, the set function will be used with the `ax` object.
 
 ```python
 fig, ax = plt.subplots()
 
-ax.set(xlabel= "Penguin Body Mass (g)", title = "Penguin Body Mass by Species")
+ax.set(xlabel= "Penguin Body Mass (g)", 
+       title = "Penguin Body Mass by Species")
 ```
 ![]({{christinegu27.github.io}}/images/empty penguin graph.png)
 
-Before any data can be plotted on the graph, a plotting function needs to be defined. This function will be applied to each group, or penguin species, to allow the histogram to color code by species.  This will allow the histogram  to color code by  species. The plotting function will be defined to also give labels for each group it is plotting and provide a legend.
+Before any data can be plotted on the graph, a plotting function needs to be defined. This function will be applied to each group to allow the histogram to color code by species. The plotting function will be defined to also give labels for each group it is plotting and provide a legend.
 
 ```python 
 def plot_hist(df, colname, alpha):
@@ -255,13 +258,13 @@ def plot_hist(df, colname, alpha):
     """
     #gets the current species being plotted
     species = df['Species'].iloc[0]
-    #uses the histogram plotting function to create a histogram of the penguin mass
+    #uses the hist function to create a histogram of the penguin mass
     #also assigned a label to the plotted data
     ax.hist(df[colname], alpha=alpha, label = species.split()[0])
     #displays the legend
     ax.legend()
 ```
-Now that the function needed to create the histogram is defined, it's finally time to create the visualization. The groupby function will be used on the dataset to split it up by penguin species. Then for each species, the apply function will literally apply the plotting function to the data. `plot_hist` will be called 3 times in total, one for each penguin species.
+Now that the function needed to create the histogram is defined, it's finally time to create the visualization. The groupby function will be used on the dataset to split it up by penguin species. Then for each species, the apply function will literally apply the plotting function (`plot_hist`) to the data. `plot_hist` will be called 3 times in total, one for each penguin species.
 
 ```python
 penguins.groupby(['Species']).apply(plot_hist, 'Body Mass (g)', .5)
@@ -269,7 +272,7 @@ fig
 ```
 ![]({{christinegu27.github.io}}/images/blog post 0 penguin.png)
 
-Our final visualization shows the histogram of penguin body mass by species. The legend shows the color corresponding with each penguin species, where green represents Gentoo penguins, blue (Adelie) and orange (Chinstrap) penguins. On average, Adelie and Chinstrap penguins are about the same size, but Gentoo penguins are generally larger.
+Our final visualization shows the histogram of penguin body mass by species. The legend shows the color corresponding with each penguin species, where green represents Gentoo penguins, blue (Adelie), and orange (Chinstrap) penguins. On average, Adelie and Chinstrap penguins are about the same size, but Gentoo penguins are generally larger.
 
 {::options parse_block_html="true" /}
 <div class="got-help">
