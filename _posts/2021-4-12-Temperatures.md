@@ -186,12 +186,15 @@ Since the temps.csv file is so large, it has to be divided into sections, where 
 
 
 ```python
+#create a connection to a database file called "temps"
 conn = sqlite3.connect("temps.db")
 
+#prepare data from temps.csv, then add to database in chunks
 df_iter = pd.read_csv("temps.csv", chunksize = 100000)
 for df in df_iter:
      df = prepare_df(df)
      df.to_sql("temperatures", conn, if_exists = "append", index = False)
+
     
 stations.to_sql("stations", conn, if_exists = "replace", index = False)
 country.to_sql("countries", conn, if_exists = "replace", index = False)
@@ -480,7 +483,7 @@ def coef(data_group):
     return round(LR.coef_[0], 4)
 ```
 
-To match with the dataset produced earlier, let's see the temperature change among stations in India from 1980 to 2020. Each station will need at least 10 years of measured temperatures to be included in the map to reduce any abnormal data points.
+Let's see the temperature change among stations in Brazil from 1980 to 2020. Each station will need at least 10 years of measured temperatures to be included in the map to reduce any abnormal data points.
 
 
 ```python
@@ -579,6 +582,7 @@ pio.templates.default = "seaborn"
 fig = temperature_elevation("Brazil", 2010, 
                             title = "Temperature across Brazil in 2010 at stations with low and high elevation.")
 
+write_html(fig, "temp_elevation.html")
 fig.show()
 ```
 
@@ -672,6 +676,7 @@ def coefficient_by_country(year_begin, year_end, month,**kwargs):
 fig=coefficient_by_country(1960, 2020, 4, 
                            color_continuous_scale=color_map,
                            title = "Estimates of annual temperature increase from 1980 to 2020 per country.")
+write_html(fig, "temp_choropleth.html")
 fig.show()
 ```
 {% include temp_choropleth.html %}
